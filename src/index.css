@@ -1,0 +1,176 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+  Charte graphique « Justine Kem's » — haute couture premium.
+  noir profond #1a1614 · ivoire #faf6ef · or #c9a24b · prune #6e2a3c
+*/
+:root {
+  --radius: 0.75rem;
+
+  /* Surfaces & textes */
+  --background: #faf6ef; /* ivoire */
+  --foreground: #1a1614; /* noir profond */
+  --card: #fffdf9;
+  --card-foreground: #1a1614;
+  --popover: #fffdf9;
+  --popover-foreground: #1a1614;
+
+  /* Couleurs d'action */
+  --primary: #c9a24b; /* or */
+  --primary-foreground: #1a1614;
+  --secondary: #6e2a3c; /* prune */
+  --secondary-foreground: #faf6ef;
+
+  /* Neutres doux */
+  --muted: #efe9dd;
+  --muted-foreground: #6f655a;
+  --accent: #f3ecdd; /* effleurement doré */
+  --accent-foreground: #1a1614;
+
+  --destructive: #b3261e;
+  --destructive-foreground: #faf6ef;
+
+  --border: #e6ddcd;
+  --input: #e6ddcd;
+  --ring: #c9a24b;
+
+  /* Graphiques (recharts, phases suivantes) */
+  --chart-1: #c9a24b;
+  --chart-2: #6e2a3c;
+  --chart-3: #8a6d3b;
+  --chart-4: #a9745f;
+  --chart-5: #4d4038;
+
+  /* Barre latérale — sombre & premium */
+  --sidebar: #1a1614;
+  --sidebar-foreground: #ece5d8;
+  --sidebar-primary: #c9a24b;
+  --sidebar-primary-foreground: #1a1614;
+  --sidebar-accent: #2a231f;
+  --sidebar-accent-foreground: #faf6ef;
+  --sidebar-border: #332b25;
+  --sidebar-ring: #c9a24b;
+}
+
+.dark {
+  --background: #16110f;
+  --foreground: #f1ebe1;
+  --card: #1f1916;
+  --card-foreground: #f1ebe1;
+  --popover: #1f1916;
+  --popover-foreground: #f1ebe1;
+  --primary: #d4b063;
+  --primary-foreground: #1a1614;
+  --secondary: #8a3a4e;
+  --secondary-foreground: #f1ebe1;
+  --muted: #271f1b;
+  --muted-foreground: #b6a896;
+  --accent: #2c241f;
+  --accent-foreground: #f1ebe1;
+  --destructive: #e06b62;
+  --destructive-foreground: #1a1614;
+  --border: #322a24;
+  --input: #322a24;
+  --ring: #d4b063;
+  --chart-1: #d4b063;
+  --chart-2: #b3556b;
+  --chart-3: #c0975a;
+  --chart-4: #c79079;
+  --chart-5: #8a7a6c;
+  --sidebar: #100c0a;
+  --sidebar-foreground: #ece5d8;
+  --sidebar-primary: #d4b063;
+  --sidebar-primary-foreground: #1a1614;
+  --sidebar-accent: #221b17;
+  --sidebar-accent-foreground: #f1ebe1;
+  --sidebar-border: #2a221d;
+  --sidebar-ring: #d4b063;
+}
+
+@theme inline {
+  /* Jetons sémantiques (utilisés par shadcn/ui) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Couleurs de marque directes : bg-gold, text-plum, etc. */
+  --color-gold: #c9a24b;
+  --color-plum: #6e2a3c;
+  --color-ink: #1a1614;
+  --color-ivory: #faf6ef;
+
+  /* Rayons */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Typographie */
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Playfair Display', ui-serif, Georgia, serif;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif;
+  }
+
+  /* Barre de défilement discrète */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--muted-foreground) 30%, transparent);
+    border-radius: 9999px;
+  }
+}
