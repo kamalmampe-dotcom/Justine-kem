@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
 
 export function StudentDetailPage() {
   const { id } = useParams()
@@ -136,7 +135,7 @@ export function StudentDetailPage() {
                         "font-medium text-sm",
                         module.completed ? "text-foreground" : "text-foreground"
                       )}>
-                        {module.module_name}
+                        {module.name || 'Module'}
                       </span>
                     </div>
                     {module.completed && (

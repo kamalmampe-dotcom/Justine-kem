@@ -8,23 +8,23 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 
 export function ShopPage() {
-  const { products } = useData()
+  const { shopItems } = useData()
   const [search, setSearch] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('all')
 
   const categories = useMemo(() => {
     const cats = new Set<string>()
-    products.forEach(p => cats.add(p.category))
+    shopItems.forEach((p: any) => cats.add(p.category))
     return Array.from(cats)
-  }, [products])
+  }, [shopItems])
 
   const filteredProducts = useMemo(() => {
-    return products.filter(p => {
+    return shopItems.filter((p: any) => {
       const matchSearch = !search.trim() || p.name.toLowerCase().includes(search.toLowerCase())
       const matchCat = categoryFilter === 'all' || p.category === categoryFilter
       return matchSearch && matchCat
     })
-  }, [products, search, categoryFilter])
+  }, [shopItems, search, categoryFilter])
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">

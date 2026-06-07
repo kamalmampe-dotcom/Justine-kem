@@ -7,12 +7,12 @@ import {
 } from 'react'
 import type {
   Client, Order, Formation, Student, RentalItem, Rental,
-  Appointment, ShopItem, Payment, Settings,
+  Appointment, ShopItem, Payment, Settings, Measurements,
 } from '@/types'
 import {
   demoClients, demoOrders, demoFormations, demoStudents,
   demoRentalItems, demoRentals, demoAppointments, demoShopItems,
-  demoPayments, demoSettings,
+  demoPayments, demoSettings, demoMeasurements,
 } from '@/data/demo-data'
 
 // ── Helpers ──────────────────────────────────────────
@@ -72,6 +72,10 @@ interface DataContextType {
   payments: Payment[]
   addPayment: (p: Omit<Payment, 'id' | 'created_at'>) => Payment
 
+  // Mesures
+  measurements: Measurements[]
+  addMeasurement: (m: Omit<Measurements, 'id' | 'created_at'>) => Measurements
+
   // Réglages
   settings: Settings
   updateSettings: (s: Partial<Settings>) => void
@@ -90,6 +94,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [appointments, setAppointments] = useState<Appointment[]>(demoAppointments)
   const [shopItems, setShopItems] = useState<ShopItem[]>(demoShopItems)
   const [payments, setPayments] = useState<Payment[]>(demoPayments)
+  const [measurements, setMeasurements] = useState<Measurements[]>(demoMeasurements)
   const [settings, setSettings] = useState<Settings>(demoSettings)
 
   const today = () => new Date().toISOString().split('T')[0]
@@ -219,6 +224,13 @@ export function DataProvider({ children }: { children: ReactNode }) {
     return p
   }, [])
 
+  // ── Mesures ──────────────────────────────────────
+  const addMeasurement = useCallback((data: Omit<Measurements, 'id' | 'created_at'>) => {
+    const m: Measurements = { ...data, id: uid('mes'), created_at: today() } as Measurements
+    setMeasurements((prev) => [m, ...prev])
+    return m
+  }, [])
+
   // ── Réglages ─────────────────────────────────────
   const updateSettings = useCallback((data: Partial<Settings>) => {
     setSettings((prev) => ({ ...prev, ...data }))
@@ -236,6 +248,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
         appointments, addAppointment, updateAppointment, deleteAppointment,
         shopItems, addShopItem, updateShopItem,
         payments, addPayment,
+        measurements, addMeasurement,
         settings, updateSettings,
       }}
     >

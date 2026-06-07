@@ -14,6 +14,7 @@ import type {
   ShopItem,
   Payment,
   Settings,
+  Measurements,
 } from '@/types'
 
 // ── Réglages ─────────────────────────────────────────
@@ -620,4 +621,34 @@ export const demoPayments: Payment[] = [
   // Boutique
   { id: 'pay-015', client_id: 'cl-008', activity: 'Boutique', reference_id: 'si-001', amount: 35000, date: '2026-06-02', method: 'Espèces', notes: 'Achat sac en cuir', created_at: '2026-06-02' },
   { id: 'pay-016', client_id: 'cl-001', activity: 'Boutique', reference_id: 'si-004', amount: 16000, date: '2026-05-20', method: 'Espèces', notes: '2 paires de boucles', created_at: '2026-05-20' },
+]
+
+// ── Mesures ──────────────────────────────────────────
+export const demoMeasurements: Measurements[] = [
+  {
+    id: 'mes-001',
+    client_id: 'cl-001',
+    tour_poitrine: 92,
+    tour_taille: 72,
+    tour_bassin: 98,
+    longueur_taille_devant: 42,
+    longueur_taille_dos: 40,
+    carrure_devant: 36,
+    carrure_dos: 37,
+    tour_encolure: 38,
+    created_at: '2024-03-15',
+  },
+  {
+    id: 'mes-002',
+    client_id: 'cl-002',
+    tour_poitrine: 88,
+    tour_taille: 68,
+    tour_bassin: 94,
+    longueur_taille_devant: 40,
+    longueur_taille_dos: 38,
+    carrure_devant: 34,
+    carrure_dos: 35,
+    tour_encolure: 36,
+    created_at: '2024-04-10',
+  },
 ]

@@ -5,7 +5,7 @@ import { formatFcfa, cn } from '@/lib/utils'
 import {
   TrendingUp, ClipboardList, Clock, AlertTriangle,
   GraduationCap, Crown, Calendar, ArrowRight, MessageCircle,
-  Users, Wallet,
+  Wallet,
 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -259,7 +259,7 @@ export function DashboardPage() {
                     ))}
                   </Pie>
                   <RechartsTooltip
-                    formatter={(value: number, name: string) => [`${value} commande(s)`, name]}
+                    formatter={(value: any) => `${value} commande(s)`}
                     contentStyle={{ borderRadius: 12, border: '1px solid var(--border)', background: 'var(--card)' }}
                   />
                 </PieChart>

@@ -15,14 +15,16 @@ export function RentalCatalogPage() {
 
   const categories = useMemo(() => {
     const cats = new Set<string>()
-    rentalItems.forEach(item => cats.add(item.category))
+    rentalItems.forEach(item => {
+      if (item.category) cats.add(item.category)
+    })
     return Array.from(cats)
   }, [rentalItems])
 
   const filteredItems = useMemo(() => {
     return rentalItems.filter(item => {
       const matchSearch = !search.trim() || item.name.toLowerCase().includes(search.toLowerCase())
-      const matchCat = categoryFilter === 'all' || item.category === categoryFilter
+      const matchCat = categoryFilter === 'all' || (item.category === categoryFilter)
       return matchSearch && matchCat
     })
   }, [rentalItems, search, categoryFilter])
@@ -72,9 +74,9 @@ export function RentalCatalogPage() {
         {filteredItems.map((item) => (
           <Card key={item.id} className="border-border/60 hover:shadow-lg transition-all duration-300 group overflow-hidden flex flex-col">
             <div className="aspect-[4/5] bg-muted/40 relative flex items-center justify-center">
-              {item.images && item.images.length > 0 ? (
+              {(item.images || item.photos) && (item.images?.length || item.photos?.length) ? (
                 <img 
-                  src={item.images[0]} 
+                  src={(item.images || item.photos)?.[0]} 
                   alt={item.name} 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
@@ -91,7 +93,7 @@ export function RentalCatalogPage() {
                   'shadow-sm backdrop-blur-md font-medium text-xs border',
                   item.state === 'Disponible' && 'bg-emerald-500/80 text-white border-emerald-500/20',
                   item.state === 'Loué' && 'bg-amber-500/80 text-white border-amber-500/20',
-                  item.state === 'Maintenance' && 'bg-destructive/80 text-white border-destructive/20'
+                  item.state === 'En maintenance' && 'bg-destructive/80 text-white border-destructive/20'
                 )}>
                   {item.state === 'Disponible' && <CheckCircle2 className="h-3 w-3 mr-1" />}
                   {item.state === 'Loué' && <Clock className="h-3 w-3 mr-1" />}
@@ -118,12 +120,12 @@ export function RentalCatalogPage() {
               <div className="mt-auto space-y-3 pt-4 border-t border-border/60">
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-muted-foreground">Prix (jour)</span>
-                  <span className="font-bold text-foreground">{formatFcfa(item.price_per_day)}</span>
+                  <span className="font-bold text-foreground">{formatFcfa(item.price_per_day || item.rental_price)}</span>
                 </div>
-                {item.deposit > 0 && (
+                {(item.deposit ?? item.deposit_amount ?? 0) > 0 && (
                   <div className="flex justify-between items-center text-xs">
                     <span className="text-muted-foreground">Caution exigée</span>
-                    <span className="font-medium text-amber-600 dark:text-amber-500">{formatFcfa(item.deposit)}</span>
+                    <span className="font-medium text-amber-600 dark:text-amber-500">{formatFcfa(item.deposit ?? item.deposit_amount)}</span>
                   </div>
                 )}
               </div>

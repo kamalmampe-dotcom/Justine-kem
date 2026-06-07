@@ -4,6 +4,8 @@
 
 // ── Mesures (carnet de mesures, en cm) ───────────────
 export interface Measurements {
+  id?: string
+  client_id?: string
   tour_poitrine?: number
   tour_taille?: number
   tour_bassin?: number
@@ -22,8 +24,9 @@ export interface Measurements {
   longueur_jupe?: number
   tour_cou?: number
   longueur_boubou?: number
+  created_at?: string
   /** Mesures libres ajoutées par l'utilisatrice */
-  [key: string]: number | undefined
+  [key: string]: number | string | undefined
 }
 
 /** Labels en français pour chaque mesure standard */
@@ -93,6 +96,7 @@ export interface Order {
   model_photo?: string
   finished_photo?: string
   price: number
+  total_price?: number
   deposit: number
   balance: number // auto = price − deposit
   deadline: string
@@ -134,6 +138,7 @@ export interface Student {
   formation_id: string
   formation?: Formation
   progress: FormationModule[]
+  notes?: string
   total_amount: number
   paid_amount: number
   created_at: string
@@ -151,10 +156,14 @@ export type RentalItemState = (typeof RENTAL_ITEM_STATES)[number]
 export interface RentalItem {
   id: string
   name: string
-  photos: string[]
+  photos?: string[]
+  images?: string[]
   size: string
   rental_price: number
+  price_per_day?: number
   deposit_amount: number
+  deposit?: number
+  category?: string
   state: RentalItemState
   description?: string
   created_at: string
@@ -199,6 +208,7 @@ export interface Appointment {
   date: string
   time: string
   duration_minutes: number
+  status?: string
   notes?: string
   created_at: string
   owner_id?: string
@@ -218,9 +228,11 @@ export type ShopCategory = (typeof SHOP_CATEGORIES)[number]
 export interface ShopItem {
   id: string
   name: string
-  photos: string[]
+  photos?: string[]
+  images?: string[]
   price: number
   quantity: number
+  stock?: number
   category: ShopCategory
   description?: string
   created_at: string
@@ -242,6 +254,7 @@ export interface Payment {
   client?: Client
   activity: PaymentActivity
   reference_id: string
+  order_id?: string
   amount: number
   date: string
   method?: string
