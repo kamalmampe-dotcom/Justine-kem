@@ -85,7 +85,7 @@ export function StudentDetailPage() {
             <Edit className="h-4 w-4 mr-2" /> Modifier
           </Button>
           {progressPercent === 100 && (
-            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/20">
+            <Button onClick={() => navigate(`/atelier/apprenantes/${id}/certificat`)} className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/20">
               <FileBadge className="h-4 w-4 mr-2" /> Attestation PDF
             </Button>
           )}

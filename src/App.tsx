@@ -18,11 +18,16 @@ import { OrderDetailPage } from '@/pages/atelier/OrderDetailPage'
 import { FormationsPage } from '@/pages/atelier/FormationsPage'
 import { StudentsPage } from '@/pages/atelier/StudentsPage'
 import { StudentDetailPage } from '@/pages/atelier/StudentDetailPage'
+import { CertificatePage } from '@/pages/atelier/CertificatePage'
 import { RentalCatalogPage } from '@/pages/atelier/RentalCatalogPage'
 import { AgendaPage } from '@/pages/atelier/AgendaPage'
 import { ShopPage } from '@/pages/atelier/ShopPage'
 import { PaymentsPage } from '@/pages/atelier/PaymentsPage'
 import { SettingsPage } from '@/pages/atelier/SettingsPage'
+
+// Layout Cliente
+import { ClienteLayout } from '@/components/layout/ClienteLayout'
+import { ClienteDashboardPage } from '@/pages/cliente/ClienteDashboardPage'
 
 function App() {
   return (
@@ -48,6 +53,7 @@ function App() {
               <Route path="formations" element={<FormationsPage />} />
               <Route path="apprenantes" element={<StudentsPage />} />
               <Route path="apprenantes/:id" element={<StudentDetailPage />} />
+              <Route path="apprenantes/:id/certificat" element={<CertificatePage />} />
               
               <Route path="location" element={<RentalCatalogPage />} />
               <Route path="agenda" element={<AgendaPage />} />
@@ -57,8 +63,13 @@ function App() {
 
             </Route>
 
-            {/* Espace Cliente (À venir) */}
-            {/* <Route path="/cliente" element={<ClienteLayout />}> ... </Route> */}
+            {/* Espace Cliente */}
+            <Route path="/cliente" element={<ClienteLayout />}>
+              <Route index element={<ClienteDashboardPage />} />
+              <Route path="catalogue" element={<div className="p-8 text-center text-muted-foreground">Catalogue bientôt disponible</div>} />
+              <Route path="rdv" element={<div className="p-8 text-center text-muted-foreground">Prise de RDV bientôt disponible</div>} />
+              <Route path="formation" element={<div className="p-8 text-center text-muted-foreground">Espace Apprenante bientôt disponible</div>} />
+            </Route>
             
             {/* 404 */}
             <Route path="*" element={<Navigate to="/" replace />} />
