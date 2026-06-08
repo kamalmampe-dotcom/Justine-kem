@@ -3,27 +3,32 @@ import { Outlet, Navigate } from 'react-router-dom'
 import { Menu, Scissors } from 'lucide-react'
 import { Sidebar } from './Sidebar'
 import { useAuth } from '@/contexts/AuthContext'
+import { useData } from '@/contexts/DataContext'
 
 export function AppLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { isAuthenticated, loading } = useAuth()
+  const { isAuthenticated, loading: authLoading } = useAuth()
+  const { loading: dataLoading } = useData()
 
-  /* ── Chargement ───────────────────────────────────── */
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen bg-background gap-4">
-        <div className="p-4 rounded-2xl bg-primary/10 animate-pulse">
-          <Scissors className="h-10 w-10 text-primary" />
-        </div>
-        <p className="font-serif text-xl text-primary animate-pulse">Justine Kem's</p>
+  const loadingScreen = (
+    <div className="flex flex-col items-center justify-center h-screen bg-background gap-4">
+      <div className="p-4 rounded-2xl bg-primary/10 animate-pulse">
+        <Scissors className="h-10 w-10 text-primary" />
       </div>
-    )
-  }
+      <p className="font-serif text-xl text-primary animate-pulse">Justine Kem's</p>
+    </div>
+  )
+
+  /* ── Chargement de la session ─────────────────────── */
+  if (authLoading) return loadingScreen
 
   /* ── Redirection si non connecté ──────────────────── */
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />
   }
+
+  /* ── Chargement des données (Supabase) ────────────── */
+  if (dataLoading) return loadingScreen
 
   return (
     <div className="flex h-screen bg-background overflow-hidden">
