@@ -14,12 +14,12 @@ export function ShopPage() {
 
   const categories = useMemo(() => {
     const cats = new Set<string>()
-    shopItems.forEach((p: any) => cats.add(p.category))
+    shopItems.forEach((p) => cats.add(p.category))
     return Array.from(cats)
   }, [shopItems])
 
   const filteredProducts = useMemo(() => {
-    return shopItems.filter((p: any) => {
+    return shopItems.filter((p) => {
       const matchSearch = !search.trim() || p.name.toLowerCase().includes(search.toLowerCase())
       const matchCat = categoryFilter === 'all' || p.category === categoryFilter
       return matchSearch && matchCat
@@ -108,10 +108,10 @@ export function ShopPage() {
                     <td className="px-6 py-4 text-right font-medium text-foreground">{formatFcfa(product.price)}</td>
                     <td className="px-6 py-4 text-right">
                       <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-                        product.stock === 0 ? 'bg-destructive/10 text-destructive' : 
-                        product.stock < 5 ? 'bg-amber-500/10 text-amber-600' : 'bg-emerald-500/10 text-emerald-600'
+                        (product.stock ?? 0) === 0 ? 'bg-destructive/10 text-destructive' :
+                        (product.stock ?? 0) < 5 ? 'bg-amber-500/10 text-amber-600' : 'bg-emerald-500/10 text-emerald-600'
                       }`}>
-                        {product.stock}
+                        {product.stock ?? 0}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">

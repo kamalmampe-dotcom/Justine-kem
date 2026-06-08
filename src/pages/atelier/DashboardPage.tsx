@@ -49,12 +49,18 @@ function KpiCard({
 }
 
 /* ── Tooltip personnalisé recharts ────────────────── */
-function ChartTooltip({ active, payload, label }: any) {
+interface ChartTooltipProps {
+  active?: boolean
+  payload?: { name?: string; value?: number; fill?: string; color?: string }[]
+  label?: string | number
+}
+
+function ChartTooltip({ active, payload, label }: ChartTooltipProps) {
   if (!active || !payload?.length) return null
   return (
     <div className="bg-card border border-border rounded-xl shadow-xl p-3 text-sm">
       <p className="font-medium mb-1">{label}</p>
-      {payload.map((p: any, i: number) => (
+      {payload.map((p, i) => (
         <p key={i} className="text-muted-foreground">
           <span className="inline-block w-2.5 h-2.5 rounded-full mr-2" style={{ background: p.fill || p.color }} />
           {p.name} : <strong className="text-foreground">{formatFcfa(p.value)}</strong>
@@ -259,7 +265,7 @@ export function DashboardPage() {
                     ))}
                   </Pie>
                   <RechartsTooltip
-                    formatter={(value: any) => `${value} commande(s)`}
+                    formatter={(value) => `${value} commande(s)`}
                     contentStyle={{ borderRadius: 12, border: '1px solid var(--border)', background: 'var(--card)' }}
                   />
                 </PieChart>

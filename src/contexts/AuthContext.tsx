@@ -35,20 +35,24 @@ const AuthContext = createContext<AuthContextType | null>(null)
 
 // ── Provider ─────────────────────────────────────────
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
   const isDemoMode = !supabaseConfigured
 
-  // Restaurer la session au démarrage
-  useEffect(() => {
+  // En mode démo, la session est restaurée directement depuis localStorage via
+  // l'initialiseur d'état (évite un setState synchrone dans l'effet).
+  const [user, setUser] = useState<User | null>(() => {
     if (isDemoMode) {
       const saved = localStorage.getItem('jk_demo_user')
       if (saved) {
-        try { setUser(JSON.parse(saved)) } catch { /* ignore */ }
+        try { return JSON.parse(saved) as User } catch { /* ignore */ }
       }
-      setLoading(false)
-      return
     }
+    return null
+  })
+  const [loading, setLoading] = useState(!isDemoMode)
+
+  // Restaurer la session Supabase au démarrage
+  useEffect(() => {
+    if (isDemoMode) return
 
     // Mode Supabase
     supabase.auth.getSession().then(({ data: { session } }) => {
