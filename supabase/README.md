@@ -7,6 +7,7 @@ plateforme. Tout est aligné sur `src/types/index.ts`.
 
 | Fichier | Rôle |
 |---|---|
+| `migrations/0000_reset.sql` | ⚠️ Optionnel/destructif — supprime d'anciennes tables en conflit |
 | `migrations/0001_schema.sql` | Tables, contraintes, index, trigger de solde, **RLS** |
 | `migrations/0002_accounts.sql` | Comptes admin + cliente (SQL pur) |
 | `migrations/0003_seed.sql` | Données de démo (8 clientes, 12 commandes, etc.) |
@@ -14,7 +15,21 @@ plateforme. Tout est aligné sur `src/types/index.ts`.
 
 ## Ordre d'exécution
 
-Exécutez les trois fichiers **dans l'ordre** (`0001` → `0002` → `0003`).
+Exécutez les fichiers **dans l'ordre** : `0001` → `0002` → `0003`.
+
+> **Erreur `column "owner_id" does not exist` ?**
+> Des tables (`clients`, `orders`, …) existent déjà dans `public` (essai
+> précédent, projet v0…). Comme `0001` utilise `create table if not exists`,
+> il ne touche pas une table déjà présente avec un autre schéma, puis échoue
+> sur `owner_id`. Lancez **`0000_reset.sql`** d'abord (⚠️ il supprime ces
+> tables et leurs données), puis `0001` → `0002` → `0003`.
+>
+> Pour vérifier ce que contient une table existante :
+> ```sql
+> select column_name from information_schema.columns
+> where table_schema = 'public' and table_name = 'clients'
+> order by ordinal_position;
+> ```
 
 ### Option A — SQL Editor (le plus simple)
 
