@@ -181,8 +181,8 @@ export function AgendaPage() {
                         <span className="font-bold text-foreground">{apt.time}</span>
                         <span className="text-xs text-muted-foreground">({apt.duration_minutes} min)</span>
                       </div>
-                      <Badge variant="outline" className={cn('text-[10px] px-2 py-0', getStatusColor(apt.status))}>
-                        {apt.status}
+                      <Badge variant="outline" className={cn('text-[10px] px-2 py-0', getStatusColor(apt.status ?? 'En attente'))}>
+                        {apt.status ?? 'En attente'}
                       </Badge>
                     </div>
                     

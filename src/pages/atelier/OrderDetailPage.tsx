@@ -1,11 +1,11 @@
-import { useState, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { 
-  ArrowLeft, Edit, Calendar, Clock, MapPin, CheckCircle2, 
-  Wallet, FileText, Download, User, Printer
+  ArrowLeft, Edit, Calendar, Clock, CheckCircle2, 
+  Wallet, FileText, Download, User, Printer, Plus
 } from 'lucide-react'
 import { useData } from '@/contexts/DataContext'
-import { formatFcfa, cn } from '@/lib/utils'
+import { formatFcfa, cn, initials } from '@/lib/utils'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
@@ -34,8 +34,9 @@ export function OrderDetailPage() {
 
   const isLate = order.status !== 'Livrée' && new Date(order.deadline) < new Date()
   const balancePaid = orderPayments.reduce((acc, p) => acc + p.amount, 0)
-  const balanceDue = order.total_price - balancePaid
-  const progress = (balancePaid / order.total_price) * 100
+  const totalPrice = order.total_price || order.price
+  const balanceDue = totalPrice - balancePaid
+  const progress = (balancePaid / totalPrice) * 100
 
   // Étapes de production
   const steps = [

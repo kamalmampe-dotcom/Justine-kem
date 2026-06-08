@@ -1,9 +1,8 @@
 import { useState, useMemo } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Search, Plus, User, Phone, Mail, MapPin, ChevronRight, MoreHorizontal } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Search, Plus, User, Phone, Mail, MapPin, ChevronRight } from 'lucide-react'
 import { useData } from '@/contexts/DataContext'
-import { Client } from '@/types'
-import { cn, initials } from '@/lib/utils'
+import { initials } from '@/lib/utils'
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'

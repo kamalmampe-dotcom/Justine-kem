@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Edit, Phone, Mail, MapPin, Calendar, ClipboardList, Ruler } from 'lucide-react'
 import { useData } from '@/contexts/DataContext'
@@ -17,7 +17,7 @@ export function ClientDetailPage() {
 
   const client = clients.find((c) => c.id === id)
   const clientOrders = useMemo(() => orders.filter((o) => o.client_id === id), [orders, id])
-  const clientMeasurements = useMemo(() => measurements.filter((m) => m.client_id === id).sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()), [measurements, id])
+  const clientMeasurements = useMemo(() => measurements.filter((m) => m.client_id === id).sort((a, b) => new Date(b.created_at as string).getTime() - new Date(a.created_at as string).getTime()), [measurements, id])
 
   const latestMeasurements = clientMeasurements[0]
 
@@ -143,7 +143,7 @@ export function ClientDetailPage() {
         <TabsContent value="measurements" className="mt-6 space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-serif text-foreground">Carnet de mesures</h2>
-            {latestMeasurements && (
+            {latestMeasurements && latestMeasurements.created_at && (
               <span className="text-sm text-muted-foreground flex items-center gap-1.5">
                 <Calendar className="h-4 w-4" /> Dernière mise à jour : {new Date(latestMeasurements.created_at).toLocaleDateString('fr-FR')}
               </span>
@@ -165,7 +165,7 @@ export function ClientDetailPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {measurementGroups.map((group, i) => {
                 // Filtrer les champs qui ont une valeur
-                const fieldsWithValue = group.fields.filter(f => (latestMeasurements as any)[f.key] != null)
+                const fieldsWithValue = group.fields.filter(f => latestMeasurements[f.key] != null)
                 if (fieldsWithValue.length === 0) return null
 
                 return (
@@ -177,7 +177,7 @@ export function ClientDetailPage() {
                       {fieldsWithValue.map((field) => (
                         <div key={field.key} className="flex justify-between items-center text-sm">
                           <span className="text-muted-foreground">{field.label}</span>
-                          <span className="font-semibold text-foreground">{(latestMeasurements as any)[field.key]} cm</span>
+                          <span className="font-semibold text-foreground">{latestMeasurements[field.key]} cm</span>
                         </div>
                       ))}
                     </CardContent>

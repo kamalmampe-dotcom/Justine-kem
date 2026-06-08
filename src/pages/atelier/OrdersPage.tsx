@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Plus, Search, Filter, Clock, MoreVertical, Paperclip } from 'lucide-react'
+import { Plus, Search, Filter, Clock, MoreVertical } from 'lucide-react'
 import { useData } from '@/contexts/DataContext'
-import { Order } from '@/types'
+import type { Order } from '@/types'
 import { formatFcfa, cn, initials } from '@/lib/utils'
 
 import { Button } from '@/components/ui/button'
@@ -146,7 +146,7 @@ export function OrdersPage() {
                             {new Date(order.deadline).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
                           </div>
                           <div className="text-xs font-bold text-foreground">
-                            {formatFcfa(order.total_price)}
+                            {formatFcfa(order.total_price || order.price)}
                           </div>
                         </div>
                       </div>

@@ -8,23 +8,23 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 
 export function ShopPage() {
-  const { products } = useData()
+  const { shopItems } = useData()
   const [search, setSearch] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('all')
 
   const categories = useMemo(() => {
     const cats = new Set<string>()
-    products.forEach(p => cats.add(p.category))
+    shopItems.forEach((p) => cats.add(p.category))
     return Array.from(cats)
-  }, [products])
+  }, [shopItems])
 
   const filteredProducts = useMemo(() => {
-    return products.filter(p => {
+    return shopItems.filter((p) => {
       const matchSearch = !search.trim() || p.name.toLowerCase().includes(search.toLowerCase())
       const matchCat = categoryFilter === 'all' || p.category === categoryFilter
       return matchSearch && matchCat
     })
-  }, [products, search, categoryFilter])
+  }, [shopItems, search, categoryFilter])
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
@@ -108,10 +108,10 @@ export function ShopPage() {
                     <td className="px-6 py-4 text-right font-medium text-foreground">{formatFcfa(product.price)}</td>
                     <td className="px-6 py-4 text-right">
                       <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-                        product.stock === 0 ? 'bg-destructive/10 text-destructive' : 
-                        product.stock < 5 ? 'bg-amber-500/10 text-amber-600' : 'bg-emerald-500/10 text-emerald-600'
+                        (product.stock ?? 0) === 0 ? 'bg-destructive/10 text-destructive' :
+                        (product.stock ?? 0) < 5 ? 'bg-amber-500/10 text-amber-600' : 'bg-emerald-500/10 text-emerald-600'
                       }`}>
-                        {product.stock}
+                        {product.stock ?? 0}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">

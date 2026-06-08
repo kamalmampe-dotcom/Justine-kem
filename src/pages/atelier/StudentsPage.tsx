@@ -1,12 +1,13 @@
 import { useState, useMemo } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Search, Plus, GraduationCap, ChevronRight, Filter } from 'lucide-react'
+import { Search, Plus, GraduationCap, Filter } from 'lucide-react'
 import { useData } from '@/contexts/DataContext'
+import type { FormationModule } from '@/types'
 import { cn, initials } from '@/lib/utils'
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 
@@ -37,7 +38,7 @@ export function StudentsPage() {
     })
   }, [students, search, formationFilter])
 
-  const getStudentProgress = (progressArray: any[]) => {
+  const getStudentProgress = (progressArray: FormationModule[]) => {
     if (!progressArray.length) return 0
     const completed = progressArray.filter(p => p.completed).length
     return Math.round((completed / progressArray.length) * 100)

@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { Wallet, Search, Filter, Download } from 'lucide-react'
+import { Search, Filter, Download } from 'lucide-react'
 import { useData } from '@/contexts/DataContext'
 import { formatFcfa } from '@/lib/utils'
 
@@ -18,7 +18,7 @@ export function PaymentsPage() {
       const matchSearch = 
         !search.trim() || 
         p.activity.toLowerCase().includes(search.toLowerCase()) ||
-        p.method.toLowerCase().includes(search.toLowerCase()) ||
+        (p.method?.toLowerCase().includes(search.toLowerCase()) ?? false) ||
         client?.name.toLowerCase().includes(search.toLowerCase())
       return matchSearch
     }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())

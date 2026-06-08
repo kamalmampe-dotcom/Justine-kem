@@ -11,7 +11,19 @@ interface SidebarProps {
   onClose?: () => void
 }
 
-const NAV_SECTIONS = [
+interface NavItem {
+  label: string
+  icon: React.ElementType
+  href: string
+  end?: boolean
+}
+
+interface NavSection {
+  title?: string
+  items: NavItem[]
+}
+
+const NAV_SECTIONS: NavSection[] = [
   {
     items: [
       { label: 'Tableau de bord', icon: LayoutDashboard, href: '/atelier', end: true },
@@ -86,7 +98,7 @@ export function Sidebar({ onClose }: SidebarProps) {
                 <li key={item.href}>
                   <NavLink
                     to={item.href}
-                    end={item.end}
+                    end={item.end ?? false}
                     onClick={onClose}
                     className={({ isActive }) =>
                       cn(
